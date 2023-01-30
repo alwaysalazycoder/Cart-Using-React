@@ -1,11 +1,19 @@
 import React from 'react'
+import { toast } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import {products} from "../api/menProductapi";
 
 export const ProductCard = () => {
 
-    const Handler = (name, price, quantity, category) => {
-        console.log(name);
-        console.log(price);
+    const dispatch = useDispatch();
+
+
+
+    const Handler = (options) => {
+        dispatch({
+            type : "addToCart",payload : options
+        })
+        toast.success("Added to cart"); 
     }
 
    
@@ -20,7 +28,7 @@ export const ProductCard = () => {
                         <div className='product-name'>{i.name}</div>
                         <div className="price">{i.price}</div>
                         <div className="productCategory">{i.category}</div>
-                        <button className="AddToCard" onClick={Handler(i.name, i.price, i.quantity, i.category)}>Add to Cart</button>
+                        <button className="AddToCard" onClick={()=>(Handler({name : i.name, price :i.price, quantity : i.quantity, category : i.category, img : i.img , mrp : i.mrp}))}>Add to Cart</button>
                     </div>
                 ))}
             </div>
